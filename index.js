@@ -1,13 +1,19 @@
-// index.js
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, 
         ModalBuilder, TextInputBuilder, TextInputStyle, 
         StringSelectMenuBuilder, ButtonBuilder, ButtonStyle,
         PermissionsBitField, REST, Routes } = require('discord.js');
 const axios = require('axios');
 const fs = require('fs');
+require('dotenv').config();
 
-// Cấu hình bot
-const TOKEN = 'MTUyMTE2NzExOTgxMzgzNjk3MQ.GxT71H.Iy19nNQIMRlviMZt1PwCl_wOAhcA09AyDfmF3I';
+// Lấy token từ biến môi trường
+const TOKEN = process.env.DISCORD_TOKEN;
+
+// Kiểm tra token
+if (!TOKEN) {
+    console.error('❌ Không tìm thấy DISCORD_TOKEN trong file .env');
+    process.exit(1);
+}
 
 // Tạo client
 const client = new Client({
@@ -39,6 +45,7 @@ let spamTasks = [];
 // Event ready
 client.once('ready', () => {
     console.log(`👑 Bot Nuke God Mode đã sẵn sàng: ${client.user.tag}`);
+    console.log(`📊 Đang hoạt động trên ${client.guilds.cache.size} server`);
 });
 
 // Lớp Modal cho spam config
